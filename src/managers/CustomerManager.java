@@ -21,20 +21,20 @@ public class CustomerManager {
 
     public Customer createCustomer() {
         Customer customer = new Customer();
-        System.out.print("Vvedite imja pokupatelja: ");
+        System.out.print("Введите имя покупателя: ");
         customer.setFirstname(scanner.nextLine());
-        System.out.print("Vvedite familiju pokupatelja: ");
+        System.out.print("Введите фамилию покупателя: ");
         customer.setLastname(scanner.nextLine());
-        System.out.print("Telefon pokupatelja: ");
+        System.out.print("Телефон: ");
         customer.setPhone(scanner.nextLine());
-        System.out.println("Vvedite kolichestvo deneg: ");
+        System.out.println("Введите количество денег у покупателя: ");
         customer.setMoney(scanner.nextInt());
         return customer;
     }
 
     public void printListCustomers(Customer[] customers) {
         for (int i = 0; i < customers.length; i++) {
-            System.out.printf("%d. %s  %s. Telefon: %s Money: %d%n",
+            System.out.printf("%d. %s  %s. Телефон: %s Деньги: %d%n",
                     i+1,
                     customers[i].getFirstname(),
                     customers[i].getLastname(),
@@ -45,13 +45,13 @@ public class CustomerManager {
     }
 
     public void addBalance(Customer[] customers) {
-        System.out.println("Spisok pokupateley: ");
+        System.out.println("Список покупателей: ");
         printListCustomers(customers);
-        System.out.println("Vyberite nomer pokupatelja iz spiska: ");
+        System.out.println("Выберите номер покупателя из списка: ");
         int numberCustomer = scanner.nextInt(); scanner.nextLine();
         
-        System.out.printf("U pokupatelja %d eur%n",customers[numberCustomer - 1].getMoney());
-        System.out.println("Vvedite kolichestvo dobavljaemyh deneg: ");
+        System.out.printf("У покупателя %d eur%n",customers[numberCustomer - 1].getMoney());
+        System.out.println("Введите сколько добавить денег: ");
         int addBalance = scanner.nextInt(); scanner.nextLine();
         customers[numberCustomer - 1].setMoney(customers[numberCustomer - 1].getMoney() + addBalance);
     }

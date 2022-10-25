@@ -28,17 +28,17 @@ public class PurchaseManager {
 
     public Purchase createPurchase(Product[] products, Customer[] customers) {
         
-        System.out.println("Spisok pokupateley: ");
+        System.out.println("Список покупателей: ");
         customerManager.printListCustomers(customers);
-        System.out.println("Vyberite nomer pokupatelja iz spiska: ");
+        System.out.println("Выберите номер покупателя из списка: ");
         int numberCustomer = scanner.nextInt(); scanner.nextLine();
         
-        System.out.println("Spisok produktov: ");
+        System.out.println("Список продуктов: ");
         productManager.printListProducts(products);
-        System.out.println("Vyberite nomer produkta iz spiska: ");
+        System.out.println("Выберите номер продукта из списка: ");
         int numberProduct = scanner.nextInt(); scanner.nextLine();
         
-        System.out.println("Vvedite kolichestvo produkta: ");
+        System.out.println("Введите количество покупаемого продукта: ");
         int countProduct = scanner.nextInt(); scanner.nextLine();
         
         Purchase purchase = new Purchase();

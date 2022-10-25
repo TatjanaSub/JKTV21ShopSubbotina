@@ -45,14 +45,14 @@ public class App {
         boolean repeat = true;
         do{
             System.out.println("Функции приложения:");
-            System.out.println("0. Vyhod iz programmy");
-            System.out.println("1. Dobavit produkt");
-            System.out.println("2. Spisok prodavajemyh produktov");
-            System.out.println("3. Dobavit pokupatelja");
-            System.out.println("4. Spisok zaregistrirovannyh pokupatelei");
-            System.out.println("5. Pokupka pokupatelem produkta");
-            System.out.println("6. Dohod magazina za vsjo vremja raboty");
-            System.out.println("7. Dobavit deneg pokupatelju");
+            System.out.println("0. Выход из программы");
+            System.out.println("1. Добавить продукт");
+            System.out.println("2. Список продавемых продуктов");
+            System.out.println("3. Добавить покупателя");
+            System.out.println("4. Список зарегистрированных покупателей");
+            System.out.println("5. Покупка покупателем продукта");
+            System.out.println("6. Оборот магазина за все время работы");
+            System.out.println("7. Добавить денег покупателю");
             System.out.print("Выберите номер функции: ");
             int task = scanner.nextInt();
             scanner.nextLine();
@@ -61,31 +61,31 @@ public class App {
                     repeat = false;
                     break;
                 case 1:
-                    System.out.println("1. Dobavit produkt");
+                    System.out.println("1. Добавить продукт");
                     addProduct(productManager.createProduct()) ;
                     break;
                 case 2:
-                    System.out.println("2. Spisok prodavajemyh produktov");
+                    System.out.println("2. Список продавемых продуктов");
                     productManager.printListProducts(products);
                     break;
                 case 3:
-                    System.out.println("3. Dobavit pokupatelja");
+                    System.out.println("3. Добавить покупателя");
                     addCustomer(customerManager.createCustomer());
                     break;
                 case 4:
-                    System.out.println("4. Spisok zaregistrirovannyh pokupatelei");
+                    System.out.println("4. Список зарегистрированных покупателей");
                     customerManager.printListCustomers(customers);
                     break;
                 case 5:
-                    System.out.println("5. Pokupka pokupatelem produkta");
+                    System.out.println("5. Покупка покупателем продукта");
                     addPurchase(purchaseManager.createPurchase(products, customers));
                     break;
                 case 6:
-                    System.out.println("6. Dohod magazina za vsjo vremja raboty");
+                    System.out.println("6. Оборот магазина за все время работы");
                     shopMoney();
                     break;
                 case 7:
-                    System.out.println("7. Dobavit deneg pokupatelju");
+                    System.out.println("7. Добавить денег покупателю");
                     customerManager.addBalance(customers);
                     break;
                 default:
@@ -109,6 +109,18 @@ public class App {
         purchases = Arrays.copyOf(purchases, purchases.length + 1);
         purchases[purchases.length - 1] = purchase;
     }
+    
+    private void shopMoney() {
+        int shopMoney = 0; // беру цену из purchases
+//        int shopMoney = 0; // беру цену из product
+        
+        for (int i = 0; i < purchases.length; i++) {
+            shopMoney = shopMoney + purchases[i].getAmountCustomer() * purchases[i].getPriceCustomer();
+//            shopMoney = shopMoney + purchases[i].getAmountCustomer() * purchases[i].getProduct().getPrice();
+        }
+        System.out.printf("%nОборот магазина за все время работы: %d eur%n",shopMoney);
+        System.out.println();
+    }
 
     private void testAddCustomer() {
         Customer customer = new Customer("Ivan", "Ivanov","53912939", 350);
@@ -122,13 +134,5 @@ public class App {
         products[products.length - 1] = product;
     }
 
-    private void shopMoney() {
-        int shopMoney = 0;
-        for (int i = 0; i < purchases.length; i++) {
-            shopMoney = shopMoney + purchases[i].getAmountCustomer() * purchases[i].getPriceCustomer();
-        }
-        System.out.printf("Dohod magazina za vsjo vremja raboty: %d eur",shopMoney);
-        System.out.println();
-    }
     
 }

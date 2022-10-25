@@ -21,20 +21,20 @@ public class ProductManager {
 
     public Product createProduct() {
         Product product = new Product();
-        System.out.println("Vvedite naimenovanije produkta: ");
+        System.out.println("Введите наименование продукта: ");
         product.setTitle(scanner.nextLine());
-        System.out.println("Vvedite proizvoditelja: ");
+        System.out.println("Вводите производителя: ");
         product.setManufacturer(scanner.nextLine());
-        System.out.println("Vvedite kolichestvo tovara: ");
+        System.out.println("Введите количество: ");
         product.setAmountShop(scanner.nextInt());
-        System.out.println("Vvedite chenu prodaznuju: ");
+        System.out.println("Введите цену: ");
         product.setPrice(scanner.nextInt());
         return product;
     }
     
     public void printListProducts(Product[] products ){
         for (int i = 0; i < products.length; i++) {
-            System.out.printf("%d. %s Manufacturer: %s. Count: %d Price: %d%n",
+            System.out.printf("%d. %s Производитель: %s. Количество: %d Цена: %d%n",
                     i+1,
                     products[i].getTitle(),
                     products[i].getManufacturer(),
