@@ -8,7 +8,9 @@ package managers;
 import entity.Customer;
 import entity.Product;
 import entity.Purchase;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -17,8 +19,8 @@ import java.util.Scanner;
  */
 public class PurchaseManager {
     private final Scanner scanner;
-    private ProductManager productManager;
-    private CustomerManager customerManager;
+    private final ProductManager productManager;
+    private final CustomerManager customerManager;
 
     public PurchaseManager() {
         scanner = new Scanner(System.in);
@@ -26,7 +28,7 @@ public class PurchaseManager {
         customerManager = new CustomerManager();
     }
 
-    public Purchase createPurchase(Product[] products, Customer[] customers) {
+    public Purchase createPurchase(List<Product> products, List<Customer> customers) {
         
         System.out.println("Список покупателей: ");
         customerManager.printListCustomers(customers);
@@ -42,14 +44,30 @@ public class PurchaseManager {
         int countProduct = scanner.nextInt(); scanner.nextLine();
         
         Purchase purchase = new Purchase();
-        purchase.setCustomer(customers[numberCustomer - 1]);
+        purchase.setCustomer(customers.get(numberCustomer - 1));
         purchase.setTakeOfProduct(new GregorianCalendar().getTime());
-        purchase.setProduct(products[numberProduct - 1]);
+        purchase.setProduct(products.get(numberProduct - 1));
         purchase.setAmountCustomer(countProduct);
-        purchase.setPriceCustomer(products[numberProduct - 1].getPrice());
-        products[numberProduct - 1].setAmountShop(products[numberProduct - 1].getAmountShop() - countProduct);
-        customers[numberCustomer -1].setMoney(customers[numberCustomer -1].getMoney() - countProduct * products[numberProduct - 1].getPrice());
+        purchase.setPriceCustomer(products.get(numberProduct - 1).getPrice());
+        products.get(numberProduct - 1).setAmountShop(products.get(numberProduct - 1).getAmountShop() - countProduct);
+        customers.get(numberCustomer - 1).setMoney(customers.get(numberCustomer - 1).getMoney() - countProduct * products.get(numberProduct - 1).getPrice());
         
         return purchase;
+    }
+    
+     public void shopMoney(List<Purchase>purchases) {
+        int shopMoney = 0; 
+        
+        for (int i = 0; i < purchases.size(); i++) {
+            // беру цену из purchases
+            shopMoney = shopMoney + purchases.get(i).getAmountCustomer() * purchases.get(i).getPriceCustomer();
+            // беру цену из product
+//            shopMoney = shopMoney + purchases.get(i).getAmountCustomer() * purchases.get(i).getProduct().getPrice();
+            
+        }
+        System.out.printf("%nОборот магазина за все время работы: %d eur%n",shopMoney);
+        System.out.println();
+         System.out.println(purchases);
+        Arrays.toString(purchases.toArray());
     }
 }

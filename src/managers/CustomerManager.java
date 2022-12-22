@@ -6,6 +6,7 @@
 package managers;
 
 import entity.Customer;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -32,28 +33,28 @@ public class CustomerManager {
         return customer;
     }
 
-    public void printListCustomers(Customer[] customers) {
-        for (int i = 0; i < customers.length; i++) {
+    public void printListCustomers(List<Customer> customers) {
+        for (int i = 0; i < customers.size(); i++) {
             System.out.printf("%d. %s  %s. Телефон: %s Деньги: %d%n",
                     i+1,
-                    customers[i].getFirstname(),
-                    customers[i].getLastname(),
-                    customers[i].getPhone(),
-                    customers[i].getMoney()
+                    customers.get(i).getFirstname(),
+                    customers.get(i).getLastname(),
+                    customers.get(i).getPhone(),
+                    customers.get(i).getMoney()
             );
         }
     }
 
-    public void addBalance(Customer[] customers) {
+    public void addBalance(List<Customer> customers) {
         System.out.println("Список покупателей: ");
         printListCustomers(customers);
         System.out.println("Выберите номер покупателя из списка: ");
         int numberCustomer = scanner.nextInt(); scanner.nextLine();
         
-        System.out.printf("У покупателя %d eur%n",customers[numberCustomer - 1].getMoney());
+        System.out.printf("У покупателя %d eur%n",customers.get(numberCustomer - 1).getMoney());
         System.out.println("Введите сколько добавить денег: ");
         int addBalance = scanner.nextInt(); scanner.nextLine();
-        customers[numberCustomer - 1].setMoney(customers[numberCustomer - 1].getMoney() + addBalance);
+        customers.get(numberCustomer - 1).setMoney(customers.get(numberCustomer - 1).getMoney() + addBalance);
     }
     
     

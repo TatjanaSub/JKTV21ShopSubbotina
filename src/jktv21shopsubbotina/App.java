@@ -5,12 +5,13 @@
  */
 package jktv21shopsubbotina;
 
-import java.util.Arrays;
 import java.util.Scanner;
 import entity.Customer;
 import entity.Product;
 import entity.Purchase;
+import java.util.List;
 import managers.CustomerManager;
+import managers.DataManager;
 import managers.ProductManager;
 import managers.PurchaseManager;
 
@@ -19,13 +20,19 @@ import managers.PurchaseManager;
  * @author pupil
  */
 public class App {
-     private final Scanner scanner;
+    private final Scanner scanner;
     private final CustomerManager customerManager;
     private final PurchaseManager purchaseManager;
     private final ProductManager productManager;
-    private Purchase[] purchases;
-    private Customer[] customers;
-    private Product[] products;
+    
+    private final DataManager dataManager;
+    
+    private List<Purchase>purchases;
+//    private Purchase[] purchases;
+    private List<Customer>customers;
+//    private Customer[] customers;
+    private List<Product>products;
+//    private Product[] products;
     
 
     public App() {
@@ -34,11 +41,11 @@ public class App {
         purchaseManager = new PurchaseManager();
         productManager = new ProductManager();
         
-        purchases = new Purchase[0];
-        customers = new Customer[0];
-        products = new Product[0];
-        testAddCustomer();
-        testAddProduct();
+        dataManager = new DataManager();
+        
+        purchases = dataManager.loadPurchases();
+        customers = dataManager.loadCustomers();
+        products = dataManager.loadProducts();
     }
     
     public void run(){
@@ -62,7 +69,8 @@ public class App {
                     break;
                 case 1:
                     System.out.println("1. Добавить продукт");
-                    addProduct(productManager.createProduct()) ;
+                    products.add(productManager.createProduct());
+                    dataManager.saveProducts(products);
                     break;
                 case 2:
                     System.out.println("2. Список продавемых продуктов");
@@ -70,7 +78,8 @@ public class App {
                     break;
                 case 3:
                     System.out.println("3. Добавить покупателя");
-                    addCustomer(customerManager.createCustomer());
+                    customers.add(customerManager.createCustomer());
+                    dataManager.saveCustomers(customers);
                     break;
                 case 4:
                     System.out.println("4. Список зарегистрированных покупателей");
@@ -78,15 +87,19 @@ public class App {
                     break;
                 case 5:
                     System.out.println("5. Покупка покупателем продукта");
-                    addPurchase(purchaseManager.createPurchase(products, customers));
+                    purchases.add(purchaseManager.createPurchase(products, customers));
+                    dataManager.savePurchases(purchases);
+                    dataManager.saveCustomers(customers);
+                    dataManager.saveProducts(products);
                     break;
                 case 6:
                     System.out.println("6. Оборот магазина за все время работы");
-                    shopMoney();
+                    purchaseManager.shopMoney(purchases);
                     break;
                 case 7:
                     System.out.println("7. Добавить денег покупателю");
                     customerManager.addBalance(customers);
+                    dataManager.saveCustomers(customers);
                     break;
                 default:
                     System.out.println("Выберите номер функции из списка!");
@@ -95,44 +108,7 @@ public class App {
         System.out.println("Пока!");
     }
     
-    private void addCustomer(Customer customer){
-        customers = Arrays.copyOf(customers, customers.length + 1);
-        customers[customers.length - 1] = customer;
-    }
-     
-    private void addProduct(Product product){
-        products = Arrays.copyOf(products, products.length + 1);
-        products[products.length - 1] = product;
-    }
-    
-    private void addPurchase(Purchase purchase){
-        purchases = Arrays.copyOf(purchases, purchases.length + 1);
-        purchases[purchases.length - 1] = purchase;
-    }
-    
-    private void shopMoney() {
-        int shopMoney = 0; // беру цену из purchases
-//        int shopMoney = 0; // беру цену из product
-        
-        for (int i = 0; i < purchases.length; i++) {
-            shopMoney = shopMoney + purchases[i].getAmountCustomer() * purchases[i].getPriceCustomer();
-//            shopMoney = shopMoney + purchases[i].getAmountCustomer() * purchases[i].getProduct().getPrice();
-        }
-        System.out.printf("%nОборот магазина за все время работы: %d eur%n",shopMoney);
-        System.out.println();
-    }
-
-    private void testAddCustomer() {
-        Customer customer = new Customer("Ivan", "Ivanov","53912939", 350);
-        customers = Arrays.copyOf(customers, customers.length + 1);
-        this.customers[this.customers.length - 1] = customer;
-    }
-
-    private void testAddProduct() {
-        Product product = new Product("Milk", "Farmi", 20, 1);
-        products = Arrays.copyOf(products, products.length + 1);
-        products[products.length - 1] = product;
-    }
+   
 
     
 }

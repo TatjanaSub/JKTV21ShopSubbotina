@@ -5,13 +5,14 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author pupil
  */
-public class Purchase {
+public class Purchase implements Serializable{
     private Customer customer;
     private Date takeOfProduct;
     private Product product;
@@ -72,12 +73,16 @@ public class Purchase {
     @Override
     public String toString() {
         return "Purchase{" 
-                + "customer=" + customer 
-                + ", takeOfProduct=" + takeOfProduct 
-                + ", product=" + product 
-                + ", amountCustomer=" + amountCustomer 
+                + "\n"
+                +  customer 
+                + "\n"
+                + " takeOfProduct=" + takeOfProduct 
+                + "," + product 
+                + "\n"
+                + "amountCustomer=" + amountCustomer 
                 + ", priceCustomer=" + priceCustomer 
-                + '}';
+                + '}'
+                + "\n";
     }
     
 }
