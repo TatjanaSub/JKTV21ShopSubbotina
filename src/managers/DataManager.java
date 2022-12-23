@@ -19,12 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import managers.interfaces.SaveManagerInterface;
 
 /**
  *
  * @author Kasutaja
  */
-public class DataManager {
+public class DataManager implements SaveManagerInterface{
     private final String FILENAME_CUSTOMERS = "files/MyCustomers";
     private final String FILENAME_PRODUCTS = "files/MyProducts";
     private final String FILENAME_PURCHASES = "files/MyPurchases";
@@ -35,6 +36,7 @@ public class DataManager {
         file.mkdirs();
     }
 
+    @Override
     public void saveCustomers(List<Customer> customers) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(FILENAME_CUSTOMERS);
@@ -48,6 +50,7 @@ public class DataManager {
         }
     }
     
+    @Override
     public List<Customer> loadCustomers() {
         List<Customer>  customers = new ArrayList<>();
         try {
@@ -64,6 +67,7 @@ public class DataManager {
         return customers;
     }
     
+    @Override
     public void saveProducts(List<Product> products) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(FILENAME_PRODUCTS);
@@ -77,6 +81,7 @@ public class DataManager {
         }
     }
 
+    @Override
     public List<Product> loadProducts() {
         List<Product>  products = new ArrayList<>();
         try {
@@ -93,7 +98,8 @@ public class DataManager {
         return products;
     }
 
-     public void savePurchases(List<Purchase> purchases) {
+    @Override
+    public void savePurchases(List<Purchase> purchases) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(FILENAME_PURCHASES);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -106,6 +112,7 @@ public class DataManager {
         }
     }
      
+    @Override
     public List<Purchase> loadPurchases() {
         List<Purchase>  purchases = new ArrayList<>();
         try {
